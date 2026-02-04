@@ -7,10 +7,17 @@
             <h3 class="fw-bold text-dark mb-1">Pengaturan Pengguna</h3>
             <p class="text-muted small mb-0">Kelola hak akses dan data akun perpustakaan.</p>
         </div>
-        <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
-            <i class="fas fa-user-plus me-2"></i> Tambah User Baru
+        <button type="button" class="btn btn-primary shadow-sm px-4" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            Tambah User Baru
         </button>
     </div>
+
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <div class="card border-0 shadow-sm">
         <div class="card-body p-0">
@@ -45,15 +52,16 @@
                             </td>
                             <td class="text-center">
                                 @if($user->id !== Auth::id()) {{-- Mencegah menghapus akun sendiri --}}
-                                <div class="btn-group shadow-sm">
-                                    <button class="btn btn-sm btn-outline-warning" title="Edit Role">
-                                        <i class="fas fa-user-shield"></i>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button class="btn btn-sm btn-warning text-dark fw-bold px-3" title="Edit Role">
+                                        Edit
                                     </button>
+
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
-                                            <i class="fas fa-trash"></i>
+                                        <button type="submit" class="btn btn-sm btn-danger fw-bold px-3" title="Hapus">
+                                            Hapus
                                         </button>
                                     </form>
                                 </div>
@@ -65,7 +73,6 @@
                         @empty
                         <tr>
                             <td colspan="5" class="text-center py-5 text-muted">
-                                <i class="fas fa-users-slash fa-3x mb-3 d-block opacity-25"></i>
                                 Belum ada data pengguna.
                             </td>
                         </tr>
