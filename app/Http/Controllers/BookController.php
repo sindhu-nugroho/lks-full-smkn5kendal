@@ -65,8 +65,12 @@ class BookController extends Controller
     {
         $request->validate([
             'judul' => 'required',
+            'isbn'  => 'required',
             'stok' => 'required|numeric'
         ]);
+
+        // PERBAIKAN: Cari dulu datanya berdasarkan ID
+        $buku = Book::findOrFail($id);
 
         $buku->update($request->all());
         return redirect()->route('buku.index')->with('success', 'Buku berhasil diupdate.');
@@ -77,6 +81,9 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
+        // PERBAIKAN: Cari dulu datanya berdasarkan ID
+        $buku = Book::findOrFail($id);
+
         $buku->delete();
         return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus.');
     }
