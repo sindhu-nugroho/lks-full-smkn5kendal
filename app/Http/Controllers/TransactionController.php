@@ -14,7 +14,7 @@ class TransactionController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'anggota') {
-            $transactions = Transaction::with('details.book')
+            $transactions = Transaction::with('details')
                             ->where('user_id', Auth::id())
                             ->latest()
                             ->get();

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
@@ -20,7 +20,7 @@ class Transaction extends Model
     }
 
     public function books() {
-        return $this->belongsToMany(Book::class, 'book_transaction');
+        return $this->details();
     }
 
     public function details() // Tambahkan ini agar controller tidak error
